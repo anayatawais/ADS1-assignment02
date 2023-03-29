@@ -39,3 +39,34 @@ statis_prop.astype(float).describe()
 
 fig = px.box(statis_prop, y=['Pakistan','Malaysia','France','Sweden','United Kingdom'])
 fig.show()
+
+
+# Corrolation of Agricultural land for Pakistan and Malaysia
+Pakistan_df = pd.concat([Agricultural_land_sq_km['Pakistan'], Population_total['Pakistan'], Urban_population['Pakistan'],Per_Urban_population_growth['Pakistan'],Per_Urban_total_population['Pakistan']],axis=1, ignore_index=True)
+Pakistan_df.rename(columns={0: 'Agricultural_land_sq_km', 1: 'Population_total', 2: 'Urban_population', 3: 'Per_Urban_population_growth', 4: 'Per_Urban_total_population'}, inplace=True)
+Pakistan_df = Pakistan_df.dropna()
+
+matrix = Pakistan_df.astype(float).corr().round(2)
+sns.heatmap(matrix, annot=True)
+mp.show()
+#Malaysia heatmap
+Malaysia_df = pd.concat([Agricultural_land_sq_km['Malaysia'], Population_total['Malaysia'], Urban_population['Malaysia'],Per_Urban_population_growth['Malaysia'],Per_Urban_total_population['Malaysia']],axis=1, ignore_index=True)
+Malaysia_df.rename(columns={0: 'Agricultural_land_sq_km', 1: 'Population_total', 2: 'Urban_population', 3: 'Per_Urban_population_growth', 4: 'Per_Urban_total_population'}, inplace=True)
+Malaysia_df = Malaysia_df.dropna()
+
+matrix = Malaysia_df.astype(float).corr().round(2)
+sns.heatmap(matrix, annot=True)
+mp.show()
+#Trends
+
+import matplotlib.pyplot as plt
+Agricultural_land_sq_km.plot(y=['Sweden','Pakistan','France','United Kingdom','Malaysia'], use_index=True)
+plt.savefig("Agricultural_land_sq_km.svg")
+Population_total.plot(y=['Sweden','Pakistan','France','United Kingdom','Malaysia'], use_index=True)
+plt.savefig("Population_total.svg")
+Per_Urban_population_growth.plot(y=['Sweden','Pakistan','France','United Kingdom','Malaysia'], use_index=True)
+plt.savefig("Per_Urban_population_growth.svg")
+Urban_population.plot(y=['Sweden','Pakistan','France','United Kingdom','Malaysia'], use_index=True)
+plt.savefig("Urban_population.svg")
+Per_Urban_total_population.plot(y=['Sweden','Pakistan','France','United Kingdom','Malaysia'], use_index=True)
+plt.savefig("Per_Urban_total_population.svg")
